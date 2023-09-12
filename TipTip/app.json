@@ -15,11 +15,7 @@
       "**/*"
     ],
     "plugins": [
-      "@react-native-voice/voice",
-      {
-        "microphonePermission": "CUSTOM: Allow $(PRODUCT_NAME) to access the microphone",
-        "speechRecognitionPermission": "CUSTOM: Allow $(PRODUCT_NAME) to securely recognize user speech"
-      }
+      "@react-native-voice/voice"
     ],
     "ios": {
       "supportsTablet": true
@@ -30,11 +26,20 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
+        "android.permission.RECORD_AUDIO",
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.BLUETOOTH_CONNECT"
+      ],
+      "package": "com.operationd.TipTip"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d45f36b5-2705-4633-bb8e-edfbb15fa09c"
+      }
     }
   }
 }
