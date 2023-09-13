@@ -4,17 +4,13 @@ import Voice from '@react-native-voice/voice';
 import Tts from 'react-native-tts';
 import axios from 'axios';
 import OpenAI from 'openai';
-const apiUrl = 'https://api.openai.com/v1/engines/davinci/completions';
-const apiUrl2 = 'https://api.openai.com/v1/chat/completions';
+
+const apiUrl = 'https://api.openai.com/v1/chat/completions';
 const apiKey = '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'; // Thay YOUR_API_KEY bằng API Key của bạn
 
 const openai = new OpenAI({
   apiKey: apiKey,
 });
-
-// const openai = new OpenAI({
-//   apiKey: apiKey, // defaults to process.env["OPENAI_API_KEY"]
-// });
 
 Tts.setDefaultLanguage('vi-VN');
 
@@ -58,19 +54,25 @@ const App = () => {
   const callChatGPT = async () =>{
     try{
       if(text){
-
-        const completion = await openai.chat.completions.create(
-          model="gpt-3.5-turbo",
-          messages=[{"role": "user", "content": "Tell the world about the ChatGPT API in the style of a pirate."}]
-        )
-        
-        // const completion = await openai.chat.completions.create({
-        //   messages: [{ role: 'user', content: 'Say this is a test' }],
-        //   model: 'gpt-3.5-turbo',
-        //   max_tokens: 300,
-        //   temperature: 0.7
-        // });
-        console.log(completion.choices);
+        const options = {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${apiKey}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: text}],
+            max_tokens: 100,
+          })
+        }
+        try{
+          const response = await fetch(apiUrl,options);
+          const data = await response.json();
+          console.log(data);
+        }catch(error){
+          console.log(error);
+        }
 
         // const requestData = {
         //   model: "gpt-3.5-turbo",
